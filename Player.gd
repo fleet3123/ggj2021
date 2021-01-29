@@ -15,7 +15,7 @@ var interact_dist : int = 70
 var vel : Vector2 = Vector2()
 var facing_dir : Vector2 = Vector2()
 
-onready var rayCast = get_node ( "RayCast2D" ) 
+onready var ray_cast = get_node ( "ray_cast2D" ) 
 onready var anim = get_node("AnimatedSprite")
 
 func _physics_process ( delta ):
@@ -69,3 +69,16 @@ func manage_animations ():
 func play_animation ( anim_name ):
 	if anim.animation != anim_name:
 		anim.play ( anim_name )
+
+func give_xp ( amount ):
+	curr_xp += amount
+
+func take_damage ( dmg_to_take ):
+	curr_hp -= dmg_to_take
+	
+	if curr_hp <= 0:
+		die()
+
+func die():
+	get_tree().reload_current_scene()
+	
