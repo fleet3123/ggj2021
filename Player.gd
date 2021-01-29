@@ -1,19 +1,19 @@
 extends KinematicBody2D
 
-var curHp : int = 10
-var maxHp : int = 10
-var moveSpeed : int = 250
+var curr_hp : int = 10
+var max_hp : int = 10
+var move_speed : int = 250
 var damage : int = 1
 
 var gold : int = 0
-var curXp : int = 0
-var xpToNextLevel : int = 50
-var xpToLevelIncreaseRate : float = 1.2
+var curr_xp : int = 0
+var xp_to_next_lvl : int = 50
+var xp_to_lvl_increas_rate : float = 1.2
 
-var interactDist : int = 70
+var interact_dist : int = 70
 
 var vel : Vector2 = Vector2()
-var facingDir : Vector2 = Vector2()
+var facing_dir : Vector2 = Vector2()
 
 onready var rayCast = get_node ( "RayCast2D" ) 
 onready var anim = get_node("AnimatedSprite")
@@ -24,16 +24,16 @@ func _physics_process ( delta ):
 	#inputs
 	if Input.is_action_pressed ( "move_up" ):
 		vel.y -= 1
-		facingDir = Vector2 ( 0, -1 )
+		facing_dir = Vector2.UP
 	if Input.is_action_pressed ( "move_down" ):
 		vel.y += 1
-		facingDir = Vector2 ( 0, 1 )
+		facing_dir = Vector2.DOWN
 	if Input.is_action_pressed ( "move_left" ):
 		vel.x -= 1
-		facingDir = Vector2 ( -1, 0 )
+		facing_dir = Vector2.LEFT
 	if Input.is_action_pressed ( "move_right" ):
 		vel.x += 1
-		facingDir = Vector2 ( 1, 0 )
+		facing_dir = Vector2.RIGHT
 	
 	vel = vel.normalized()
 	
@@ -41,20 +41,20 @@ func _physics_process ( delta ):
 		play_animation ( "Interact" )
 	else:
 		# move the player
-		move_and_slide ( vel * moveSpeed )
+		move_and_slide ( vel * move_speed )
 	
 		manage_animations()
 
 func manage_animations ():
 
-	if ( vel.x == 0 and vel.y == 0 ):
-		if facingDir.x == 1:
+	if ( vel == Vector2.ZERO ):
+		if facing_dir.x == 1:
 			play_animation ( "IdleRight" )
-		elif facingDir.x == -1:
+		elif facing_dir.x == -1:
 			play_animation ( "IdleLeft" )
-		elif facingDir.y == 1:
+		elif facing_dir.y == 1:
 			play_animation ( "IdleUp" )
-		elif facingDir.y == -1:
+		elif facing_dir.y == -1:
 			play_animation ( "IdleDown" )
 	else:
 		if vel.x > 0:
