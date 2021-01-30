@@ -1,11 +1,13 @@
 extends Area2D
 
+
 var dir = Vector2.ZERO
 var speed = 400
 var shot = false
 var target = null
 
 var damage = 1
+
 
 func set_direction(direction):
 	dir = direction
@@ -17,6 +19,7 @@ func set_target(tar):
 	target = tar
 
 func shoot():
+	$AnimatedSprite.play()
 	shot = true
 
 func _physics_process(delta):
