@@ -10,24 +10,24 @@ var damage = 1
 
 
 func set_direction(direction):
-	dir = direction
-	
+    dir = direction
+    
 func set_position(pos):
-	position = pos
+    position = pos
 
 func set_target(tar):
-	target = tar
+    target = tar
 
 func shoot():
-	$AnimatedSprite.play()
-	shot = true
+    $AnimatedSprite.play()
+    shot = true
 
 func _physics_process(delta):
-	if shot:
-		position += (speed * dir * delta)
+    if shot:
+        position += (speed * dir * delta)
 
 
 func _on_Enemy3Bullet_body_entered(body):
-	if body == target:
-		target.take_damage(damage)
-	queue_free()
+    if body == target:
+        target.take_damage(damage)
+    queue_free()

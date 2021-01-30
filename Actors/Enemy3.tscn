@@ -1,19 +1,18 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=19 format=2]
 
-[ext_resource path="res://src/Entities/Enemy3.gd" type="Script" id=1]
-[ext_resource path="res://src/Entities/Enemy3Bullet.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/FlyFrames/Fliege_3.png" type="Texture" id=3]
-[ext_resource path="res://assets/FlyFrames/Fliege_5.png" type="Texture" id=4]
-[ext_resource path="res://assets/FlyFrames/Fliege_4.png" type="Texture" id=5]
-[ext_resource path="res://assets/FlyFrames/Fliege_12.png" type="Texture" id=6]
-[ext_resource path="res://assets/FlyFrames/Fliege_9.png" type="Texture" id=7]
-[ext_resource path="res://assets/FlyFrames/Fliege_11.png" type="Texture" id=8]
-[ext_resource path="res://assets/FlyFrames/Fliege_7.png" type="Texture" id=9]
-[ext_resource path="res://assets/FlyFrames/Fliege_10.png" type="Texture" id=10]
-[ext_resource path="res://assets/FlyFrames/Fliege_6.png" type="Texture" id=11]
-[ext_resource path="res://assets/FlyFrames/Fliege_8.png" type="Texture" id=12]
-[ext_resource path="res://assets/FlyFrames/Fliege_2.png" type="Texture" id=13]
-[ext_resource path="res://assets/FlyFrames/Fliege_1.png" type="Texture" id=14]
+[ext_resource path="res://Scripts/Enemy3.gd" type="Script" id=1]
+[ext_resource path="res://Actors/Enemy3Bullet.tscn" type="PackedScene" id=2]
+[ext_resource path="res://FlyFrames/Fliege_5.png" type="Texture" id=4]
+[ext_resource path="res://FlyFrames/Fliege_4.png" type="Texture" id=5]
+[ext_resource path="res://FlyFrames/Fliege_12.png" type="Texture" id=6]
+[ext_resource path="res://FlyFrames/Fliege_9.png" type="Texture" id=7]
+[ext_resource path="res://FlyFrames/Fliege_11.png" type="Texture" id=8]
+[ext_resource path="res://FlyFrames/Fliege_7.png" type="Texture" id=9]
+[ext_resource path="res://FlyFrames/Fliege_10.png" type="Texture" id=10]
+[ext_resource path="res://FlyFrames/Fliege_6.png" type="Texture" id=11]
+[ext_resource path="res://FlyFrames/Fliege_8.png" type="Texture" id=12]
+[ext_resource path="res://FlyFrames/Fliege_2.png" type="Texture" id=13]
+[ext_resource path="res://FlyFrames/Fliege_1.png" type="Texture" id=14]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 96.0
@@ -29,13 +28,17 @@ radius = 344.093
 
 [sub_resource type="SpriteFrames" id=5]
 animations = [ {
-"frames": [ ExtResource( 14 ), ExtResource( 13 ), ExtResource( 3 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 11 ), ExtResource( 9 ), ExtResource( 12 ), ExtResource( 7 ), ExtResource( 10 ), ExtResource( 8 ), ExtResource( 6 ) ],
+"frames": [ ExtResource( 14 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 11 ), ExtResource( 9 ), ExtResource( 12 ), ExtResource( 7 ), ExtResource( 10 ), ExtResource( 8 ), ExtResource( 6 ) ],
 "loop": true,
 "name": "default",
 "speed": 14.0
 } ]
 
-[node name="Enemy3" type="KinematicBody2D"]
+[node name="Enemy3" type="KinematicBody2D" groups=[
+"hitable",
+"mob",
+]]
+z_index = 1
 collision_layer = 4
 script = ExtResource( 1 )
 Bullet2 = ExtResource( 2 )
@@ -72,7 +75,7 @@ shape = SubResource( 4 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -168 )
 frames = SubResource( 5 )
-frame = 11
+frame = 2
 [connection signal="body_entered" from="Detection" to="." method="_on_Detection_body_entered"]
 [connection signal="body_entered" from="Attack" to="." method="_on_Attack_body_entered"]
 [connection signal="timeout" from="cooldownTimer" to="." method="_on_cooldownTimer_timeout"]
