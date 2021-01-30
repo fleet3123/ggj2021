@@ -11,7 +11,7 @@ radius = 224.143
 [sub_resource type="CircleShape2D" id=3]
 radius = 88.0
 
-[node name="Enemy1" type="KinematicBody2D"]
+[node name="Enemy2" type="KinematicBody2D"]
 collision_layer = 4
 script = ExtResource( 1 )
 jump_stop = 1.15
@@ -39,7 +39,11 @@ wait_time = 0.5
 
 [node name="recover" type="Timer" parent="."]
 wait_time = 0.3
+
+[node name="cooldownTimer" type="Timer" parent="."]
+wait_time = 2.5
 [connection signal="body_entered" from="Detection" to="." method="_on_Detection_body_entered"]
 [connection signal="body_entered" from="Attack" to="." method="_on_Attack_body_entered"]
 [connection signal="timeout" from="prepareAttack" to="." method="_on_prepareAttack_timeout"]
 [connection signal="timeout" from="recover" to="." method="_on_recover_timeout"]
+[connection signal="timeout" from="cooldownTimer" to="." method="_on_cooldownTimer_timeout"]
