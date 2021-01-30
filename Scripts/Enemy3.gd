@@ -69,9 +69,6 @@ func shoot():
 	
 	cooldown = true
 	cooldownTimer.start(2)
-	
-func recover_state():
-	pass
 
 
 func _on_cooldownTimer_timeout():
