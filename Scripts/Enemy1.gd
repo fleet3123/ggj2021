@@ -29,8 +29,8 @@ func _on_Timer_timeout():
 
     if position.distance_to ( target.position ) <= attack_dist:
         play_animation ( "Attack" )
+        $Roar.play()
         attack = true
-        target.take_damage ( damage )
 
 func _physics_process ( delta ):
 
@@ -87,4 +87,6 @@ func die ():
 
 func _on_AnimatedSprite_animation_finished():
     if attack == true:
+        if target:
+            target.take_damage ( damage )
         attack = false

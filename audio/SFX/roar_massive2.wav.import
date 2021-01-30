@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/roar_massive2.wav-c2b6731ea23457bb5d1191721cbc4d6f.sample"
+
+[deps]
+
+source_file="res://audio/SFX/roar_massive2.wav"
+dest_files=[ "res://.import/roar_massive2.wav-c2b6731ea23457bb5d1191721cbc4d6f.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
