@@ -6,6 +6,7 @@ var max_hp : int = 5
 var move_speed : int = 150
 export var xp_to_give : int = 30
 
+var attack: bool = false
 var damage : int = 1
 var attack_rate : float = 1.0
 export var attack_dist : int = 80
@@ -27,6 +28,8 @@ func _ready():
 func _on_Timer_timeout():
 
     if position.distance_to ( target.position ) <= attack_dist:
+        play_animation ( "Attack" )
+        attack = true
         target.take_damage ( damage )
 
 func _physics_process ( delta ):
@@ -38,7 +41,9 @@ func _physics_process ( delta ):
         vel = ( target.position - position ).normalized()
         move_and_slide ( vel * move_speed )
 
-    if ( vel == Vector2.ZERO ):
+    if attack == true:
+        return
+    elif vel == Vector2.ZERO :
         if facing_dir.x == 1:
             play_animation ( "IdleRight" )
         elif facing_dir.x == -1:
@@ -65,6 +70,8 @@ func _physics_process ( delta ):
 
 func play_animation ( anim_name ):
 
+    if attack == true:
+        return
     if anim.animation != anim_name:
         anim.play ( anim_name )
 
@@ -78,3 +85,6 @@ func die ():
     target.give_xp ( xp_to_give )
     queue_free()
 
+func _on_AnimatedSprite_animation_finished():
+    if attack == true:
+        attack = false

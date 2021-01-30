@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/eyeguy.png-9c9e8bcdc908222917670df7ae224068.stex"
+path="res://.import/a3.png-b945ddcf775a170aff653ae122ddb7cd.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://EnemyFrames/eyeguy.png"
-dest_files=[ "res://.import/eyeguy.png-9c9e8bcdc908222917670df7ae224068.stex" ]
+source_file="res://EnemyFrames/EyeGuy/a3.png"
+dest_files=[ "res://.import/a3.png-b945ddcf775a170aff653ae122ddb7cd.stex" ]
 
 [params]
 
