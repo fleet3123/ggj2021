@@ -117,3 +117,5 @@ func shoot ():
     var b = Bullet.instance()
     owner.add_child(b)
     b.transform = $BulletSpawn.global_transform
+
+
