@@ -1,27 +1,23 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Actors/Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Actors/Enemy1.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Actors/EyeGuy_enemy.tscn" type="PackedScene" id=2]
 [ext_resource path="res://audio/Music/map_of_the_unknown.ogg" type="AudioStream" id=3]
 [ext_resource path="res://RaumMap.tscn" type="PackedScene" id=4]
 
 [node name="MainScene" type="Node2D"]
 
 [node name="Room1" parent="." instance=ExtResource( 4 )]
-scale = Vector2( 0.55075, 0.538755 )
+scale = Vector2( 0.689167, 0.646702 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 240, 272 )
-scale = Vector2( 0.5, 0.5 )
-
-[node name="Dog" parent="." instance=ExtResource( 2 )]
-modulate = Color( 0.498039, 0.121569, 0.121569, 1 )
-position = Vector2( 760, 440 )
-scale = Vector2( 0.5, 0.5 )
-attack_dist = 30
-chase_dist = 200
-player_path = NodePath("../Player")
+position = Vector2( 184, 376 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
 autoplay = true
+
+[node name="EyeGuy" parent="." instance=ExtResource( 2 )]
+position = Vector2( 608, 448 )
+scale = Vector2( 0.344584, 0.323351 )
+player_path = NodePath("../Player")

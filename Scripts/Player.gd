@@ -105,6 +105,7 @@ func try_interacting ():
 
 func take_damage ( dmg_to_take ):
     curr_hp -= dmg_to_take
+    $AnimationPlayer.play ( "Attacked" )
 
     if curr_hp <= 0:
         die()
