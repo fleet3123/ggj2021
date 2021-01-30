@@ -1,0 +1,54 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://src/Entities/Enemy3.gd" type="Script" id=1]
+[ext_resource path="res://src/Entities/Enemy3Bullet.tscn" type="PackedScene" id=2]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 24.0
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 248.129
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 185.559
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 136.235
+
+[node name="Enemy3" type="KinematicBody2D"]
+collision_layer = 4
+script = ExtResource( 1 )
+Bullet2 = ExtResource( 2 )
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Detection" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="detectionBox" type="CollisionShape2D" parent="Detection"]
+modulate = Color( 0.458824, 0.764706, 0.0117647, 1 )
+shape = SubResource( 2 )
+
+[node name="Attack" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="attackBox" type="CollisionShape2D" parent="Attack"]
+modulate = Color( 0.658824, 0.0588235, 0.901961, 1 )
+shape = SubResource( 3 )
+
+[node name="cooldownTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="too_close" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="distance" type="CollisionShape2D" parent="too_close"]
+shape = SubResource( 4 )
+[connection signal="body_entered" from="Detection" to="." method="_on_Detection_body_entered"]
+[connection signal="body_entered" from="Attack" to="." method="_on_Attack_body_entered"]
+[connection signal="timeout" from="cooldownTimer" to="." method="_on_cooldownTimer_timeout"]
+[connection signal="body_entered" from="too_close" to="." method="_on_too_close_body_entered"]
