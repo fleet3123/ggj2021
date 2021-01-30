@@ -2,6 +2,8 @@ extends KinematicBody2D
 
 export (PackedScene) var Bullet2
 
+onready var animation = $AnimatedSprite
+
 var curr_hp = 3
 var max_hp = 3
 
@@ -25,6 +27,7 @@ enum {
 
 
 func _physics_process(delta):
+	animation.play()
 	match state:
 		IDLE:
 			seek_player()
@@ -48,6 +51,14 @@ func chase_state():
 		state = ATTACK
 
 	var direction = (target.global_position - global_position).normalized()
+	if direction.x > 0:
+		if !animation.is_flipped_h():
+			animation.set_flip_h(true)
+			
+	elif direction.x < 0:
+		if animation.is_flipped_h():
+			animation.set_flip_h(false)
+			
 		
 	if $too_close.overlaps_body(target):
 		move_and_slide((direction*(-1)) * (speed/2))
