@@ -8,6 +8,7 @@ var speed = 100
 
 onready var prepareAttack = $prepareAttack
 onready var recover = $recover
+onready var cooldownTimer = $cooldownTimer
 var target = null
 var attacking = false
 var attack_dir = Vector2.ZERO
@@ -15,6 +16,7 @@ var jump_strength = 1500
 export var jump_stop = 1.2
 var jump = jump_strength
 var preparing = false
+var cooldown = false
 
 
 enum {
@@ -37,7 +39,7 @@ func _physics_process(delta):
 		ATTACK:
 			attack_state()
 		RECOVER:
-			print("RECOVER")
+			return
 
 
 func chase_state():
@@ -45,7 +47,7 @@ func chase_state():
 		state = IDLE
 		return
 		
-	if $Attack.overlaps_body(target):
+	if $Attack.overlaps_body(target) and !cooldown:
 		state = ATTACK
 		
 	var direction = (target.global_position - global_position).normalized()
@@ -62,7 +64,7 @@ func seek_player():
 		state = CHASE
 
 func _on_Attack_body_entered(body):
-	if state != RECOVER:
+	if state != RECOVER and !cooldown:
 		state = ATTACK
 	
 func attack_state():
@@ -76,7 +78,6 @@ func attack_state():
 		attack_dir = (target.global_position - global_position).normalized()
 	
 	if !attacking:
-		print("NOT ATTACKING")
 		return
 	
 	move_and_slide(attack_dir * jump)
@@ -87,6 +88,8 @@ func attack_state():
 		
 		state = RECOVER
 		recover.start()
+		cooldownTimer.start(2.5)
+		cooldown = true
 		preparing = false
 		attacking = false
 		
@@ -96,11 +99,14 @@ func attack_state():
 func _on_prepareAttack_timeout():
 	prepareAttack.stop()
 	attacking = true
-	
-	print("ATTACK")
 
 
 func _on_recover_timeout():
 	recover.stop()
 	state = IDLE
-	print("DONE")
+
+
+func _on_cooldownTimer_timeout():
+	cooldownTimer.stop()
+	cooldown = false
+	
