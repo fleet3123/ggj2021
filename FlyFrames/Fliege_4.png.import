@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Fliege_4.png-e85fcac4fb2be93f8da8c7cac7d8761e.stex"
+path="res://.import/Fliege_4.png-5337b7d8b15eb42c8d86ef00d48e084c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Fly/Fliege_4.png"
-dest_files=[ "res://.import/Fliege_4.png-e85fcac4fb2be93f8da8c7cac7d8761e.stex" ]
+source_file="res://FlyFrames/Fliege_4.png"
+dest_files=[ "res://.import/Fliege_4.png-5337b7d8b15eb42c8d86ef00d48e084c.stex" ]
 
 [params]
 

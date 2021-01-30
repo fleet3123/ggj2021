@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/enemy_shot0003.png-8d21e385c35b20b2e2585976ba7c3773.stex"
+path="res://.import/enemy_shot0003.png-6fce7ed397a0f31e81141ad082d35bd0.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/FlyBullet/enemy_shot0003.png"
-dest_files=[ "res://.import/enemy_shot0003.png-8d21e385c35b20b2e2585976ba7c3773.stex" ]
+source_file="res://FlyBullet/enemy_shot0003.png"
+dest_files=[ "res://.import/enemy_shot0003.png-6fce7ed397a0f31e81141ad082d35bd0.stex" ]
 
 [params]
 
