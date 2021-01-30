@@ -17,15 +17,21 @@ var interact_dist : int = 70
 var vel : Vector2 = Vector2()
 var facing_dir : Vector2 = Vector2()
 
+export (PackedScene) var Bullet
+
 onready var ray_cast = $RayCast2D
 onready var anim = $AnimatedSprite
+
+func _process ( _delta ):
+    
+    if Input.is_action_just_pressed ( "interact" ):
+        try_interacting()
 
 func _physics_process ( delta ):
     vel = Vector2()
 
-#    get_viewport().get_mouse_position()
-
     facing_dir = position.direction_to ( get_global_mouse_position() )
+    $BulletSpawn.look_at ( get_global_mouse_position() )
 #    facing_dir.normalized()
     var abs_x = abs ( facing_dir.x )
     var abs_y = abs ( facing_dir.y )
@@ -53,13 +59,10 @@ func _physics_process ( delta ):
 
     vel = vel.normalized()
 
-    if ( vel == Vector2.ZERO && Input.is_action_pressed ( "interact" ) ):
-        play_animation ( "Interact" )
-    else:
-        # move the player
-        move_and_slide ( vel * move_speed )
+    # move the player
+    vel = move_and_slide ( vel * move_speed )
 
-        manage_animations()
+    manage_animations()
 
 func manage_animations ():
 
@@ -96,6 +99,10 @@ func level_up ():
     curr_xp = overflow_xp
     curr_lvl += 1
 
+func try_interacting ():
+    ray_cast.cast_to = facing_dir * interact_dist
+    shoot()
+
 func take_damage ( dmg_to_take ):
     curr_hp -= dmg_to_take
 
@@ -105,3 +112,7 @@ func take_damage ( dmg_to_take ):
 func die():
     get_tree().reload_current_scene()
 
+func shoot ():
+    var b = Bullet.instance()
+    owner.add_child(b)
+    b.transform = $BulletSpawn.global_transform
