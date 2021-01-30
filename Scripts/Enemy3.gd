@@ -24,10 +24,12 @@ enum {
 	ATTACK
 }
 
+func _ready():
+	animation.play()
+
 
 
 func _physics_process(delta):
-	animation.play()
 	match state:
 		IDLE:
 			seek_player()
@@ -71,10 +73,14 @@ func attack_state():
 	state = IDLE
 	
 func shoot():
+	var curr_position = Vector2((global_position.x - 64), (global_position.y - 192))
 	var b = Bullet2.instance()
-	b.set_direction((target.global_position - global_position).normalized())
+	b.set_direction((target.global_position - curr_position).normalized())
 	b.shoot()
-	b.set_position(global_position)
+	if animation.is_flipped_h():
+		b.set_position(Vector2(curr_position.x+128, curr_position.y))
+	else:
+		b.set_position(curr_position)
 	b.set_target(target)
 	owner.add_child(b)
 	
