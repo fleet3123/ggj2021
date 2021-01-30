@@ -2,6 +2,11 @@ extends KinematicBody2D
 
 export (PackedScene) var Bullet2
 
+var curr_hp = 3
+var max_hp = 3
+
+var xp_to_give = 20
+
 var speed = 100
 
 var target = null
@@ -81,3 +86,12 @@ func _on_Attack_body_entered(body):
 
 func _on_Detection_body_entered(body):
 	target = body
+	
+func take_damage(dmg_to_take):
+	curr_hp -= dmg_to_take
+	if curr_hp <= 0:
+		die()
+		
+func die():
+	target.give_xp(xp_to_give)
+	queue_free()
