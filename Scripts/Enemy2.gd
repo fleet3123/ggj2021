@@ -3,8 +3,9 @@ extends KinematicBody2D
 var curr_hp  = 5
 var max_hp = 5
 
-var vel
 var speed = 100
+
+var xp_to_give = 40
 
 onready var prepareAttack = $prepareAttack
 onready var recover = $recover
@@ -110,3 +111,11 @@ func _on_cooldownTimer_timeout():
 	cooldownTimer.stop()
 	cooldown = false
 	
+func take_damage(dmg_to_take):
+	curr_hp -= dmg_to_take
+	if curr_hp <= 0:
+		die()
+		
+func die():
+	target.give_xp(xp_to_give)
+	queue_free()
