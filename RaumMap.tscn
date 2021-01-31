@@ -1,7 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Environments/raum1.png" type="Texture" id=1]
 [ext_resource path="res://Environments/front_walls.png" type="Texture" id=2]
+[ext_resource path="res://Exit.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scripts/RaumMap.gd" type="Script" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 18.2444, 8.07174 )
@@ -19,8 +21,13 @@ extents = Vector2( 97.2971, 194.087 )
 extents = Vector2( 107.779, 190.983 )
 
 [node name="Room1" type="StaticBody2D"]
+scale = Vector2( 0.69, 0.647 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Room" type="Sprite" parent="."]
 position = Vector2( 927.778, 557.963 )
 texture = ExtResource( 1 )
 
@@ -43,7 +50,7 @@ shape = SubResource( 2 )
 position = Vector2( 1750.44, 345.785 )
 shape = SubResource( 2 )
 
-[node name="Sprite2" type="Sprite" parent="."]
+[node name="FrontWalls" type="Sprite" parent="."]
 position = Vector2( 927.979, 557.489 )
 z_index = 2
 texture = ExtResource( 2 )
@@ -67,3 +74,52 @@ shape = SubResource( 4 )
 position = Vector2( 1791.39, 829.515 )
 z_index = 2
 shape = SubResource( 5 )
+
+[node name="Exit_West" parent="." instance=ExtResource( 3 )]
+position = Vector2( 56.315, 580.825 )
+scale = Vector2( 1.32, 1.73214 )
+z_index = 2
+direction = 3
+
+[node name="RoomSpawn_West" type="Position2D" parent="."]
+position = Vector2( -1856, 0 )
+
+[node name="PlayerStart_West" type="Position2D" parent="."]
+position = Vector2( 160, 576 )
+
+[node name="Exit_North" parent="." instance=ExtResource( 3 )]
+position = Vector2( 928, 63.4678 )
+scale = Vector2( 1.96692, 1.01694 )
+
+[node name="RoomSpawn_North" type="Position2D" parent="."]
+position = Vector2( 0, -1112 )
+
+[node name="PlayerStart_North" type="Position2D" parent="."]
+position = Vector2( 928, 160 )
+
+[node name="Exit_East" parent="." instance=ExtResource( 3 )]
+position = Vector2( 1800.85, 581.266 )
+scale = Vector2( 1.4, 1.68 )
+z_index = 2
+direction = 1
+
+[node name="RoomSpawn_East" type="Position2D" parent="."]
+position = Vector2( 1856, 0 )
+
+[node name="PlayerStart_East" type="Position2D" parent="."]
+position = Vector2( 1704, 576 )
+
+[node name="Exit_South" parent="." instance=ExtResource( 3 )]
+position = Vector2( 928.956, 1133.17 )
+scale = Vector2( 1.88001, 1.25215 )
+direction = 2
+
+[node name="RoomSpawn_South" type="Position2D" parent="."]
+position = Vector2( 0, 1112 )
+
+[node name="PlayerStart_South" type="Position2D" parent="."]
+position = Vector2( 928, 1056 )
+scale = Vector2( 1.96692, 1.01694 )
+
+[node name="CameraPoint" type="Position2D" parent="."]
+[connection signal="tree_entered" from="." to="." method="_on_Room1_tree_entered"]
