@@ -24,24 +24,24 @@ animations = [ {
 "name": "IdleUp",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 18 ) ],
+"loop": false,
+"name": "Interact",
+"speed": 30.0
+}, {
 "frames": [ ExtResource( 5 ) ],
 "loop": true,
 "name": "IdleRight",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 18 ) ],
-"loop": false,
-"name": "Interact",
-"speed": 30.0
+"loop": true,
+"name": "MoveDown",
+"speed": 10.0
 }, {
 "frames": [ ExtResource( 3 ) ],
 "loop": true,
 "name": "MoveLeft",
-"speed": 10.0
-}, {
-"frames": [ ExtResource( 4 ) ],
-"loop": true,
-"name": "MoveUp",
 "speed": 10.0
 }, {
 "frames": [ ExtResource( 5 ) ],
@@ -49,9 +49,9 @@ animations = [ {
 "name": "MoveRight",
 "speed": 10.0
 }, {
-"frames": [ ExtResource( 18 ) ],
+"frames": [ ExtResource( 4 ) ],
 "loop": true,
-"name": "MoveDown",
+"name": "MoveUp",
 "speed": 10.0
 } ]
 

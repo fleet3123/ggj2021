@@ -22,12 +22,19 @@ export (PackedScene) var Bullet
 onready var ray_cast = $RayCast2D
 onready var anim = $AnimatedSprite
 
+var in_control : bool = true
+
 func _process ( _delta ):
-    
-    if Input.is_action_just_pressed ( "interact" ):
+    if not in_control:
+        pass    
+    elif Input.is_action_just_pressed ( "interact" ):
         try_interacting()
 
 func _physics_process ( delta ):
+    
+    if not in_control:
+        return
+    
     vel = Vector2()
 
     facing_dir = position.direction_to ( get_global_mouse_position() )
@@ -118,4 +125,5 @@ func shoot ():
     owner.add_child(b)
     b.transform = $BulletSpawn.global_transform
 
-
+func set_exit_collision ( var enable : bool ) :
+    self.set_collision_layer_bit ( 2, enable )

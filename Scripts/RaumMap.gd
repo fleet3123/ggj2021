@@ -55,13 +55,6 @@ func _ready():
     exit_west.next_room = room_west
     exit_west.next_room_path = room_path_west
     
-    print ( "ready" )
-    pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#    pass
 func set_exit_room_path ( var direction, var path : NodePath ):
     match direction:
         Direction.NORTH:
@@ -76,6 +69,3 @@ func set_exit_room_path ( var direction, var path : NodePath ):
         Direction.WEST:
             room_path_west = path
             exit_west.next_room_path = room_path_west
-
-func _on_Room1_tree_entered():
-    print ( "new tree entered" )

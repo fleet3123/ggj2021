@@ -27,7 +27,7 @@ const OPPOSITE = {
     Direction.EAST: Direction.WEST,
     Direction.SOUTH: Direction.NORTH,
     Direction.WEST: Direction.EAST
-   }
+}
 
 export (Direction)  var direction
 
@@ -36,6 +36,7 @@ var next_room_path : NodePath = ""
 #export (PackedScene) var this_room
 
 var camera : Camera2D = null
+onready var tween = $Tween
 
 func _ready ():
     camera = get_parent().get_node ( get_parent().camera_path ) as Camera2D
@@ -44,35 +45,48 @@ func _on_Exit_body_entered ( body ):
 
     var parent = get_parent()
     var player = parent.get_node ( parent.player_path )
-    if body == player:
+    if body == player and player.in_control == true:
 #            get_tree().reload_current_scene()
+        player.in_control = false
         var room = null
         if next_room_path:
             room = parent.get_node ( next_room_path )
         else:
             room = next_room.instance()
-            room.position = parent.get_node ( ROOMSPAWN + ENUMTOSTRING [ direction ] ).position
+            room.position = parent.get_node ( ROOMSPAWN + ENUMTOSTRING [ direction ] ).global_position
             room.player_path = parent.player_path
             room.camera_path = parent.camera_path
             
             parent.get_parent().add_child ( room )
             parent.set_exit_room_path ( direction, room.get_path() )
             room.set_exit_room_path ( OPPOSITE[direction], parent.get_path() )
-#            match direction:
-#                Direction.NORTH: 
-#                    parent.room_path_north = room.get_path()
-#                    room.room_path_south = parent.get_path()
-#                Direction.EAST: 
-#                    parent.room_path_east = room.get_path()
-#                    room.room_path_west = parent.get_path()
-#                Direction.SOUTH: 
-#                    parent.room_path_south = room.get_path()
-#                    room.room_path_north = parent.get_path()
-#                Direction.WEST: 
-#                    parent.room_path_west = room.get_path()
-#                    room.room_path_east = parent.get_path()
 
-        camera.position = room.get_node ( CAMERAPOINT ).global_position
-        player.position = room.get_node ( PLAYERSTART + PLAYERDICT [ direction ] ).global_position
+        tween.interpolate_property (
+            camera
+            , "position"
+            , camera.position
+            , room.get_node ( CAMERAPOINT ).global_position
+            , 1
+            , Tween.TRANS_QUAD , Tween.EASE_IN_OUT
+            )
+        tween.interpolate_property (
+            player
+            , "position"
+            , player.position
+            , room.get_node ( PLAYERSTART + PLAYERDICT [ direction ] ).global_position
+            , 1
+            , Tween.TRANS_LINEAR, Tween.EASE_IN_OUT
+            )
+#        camera.position = room.get_node ( CAMERAPOINT ).global_position
+#        player.position = room.get_node ( PLAYERSTART + PLAYERDICT [ direction ] ).global_position
+#        player.set_exit_collision ( false )
+        tween.start()
 
-
+func _on_Tween_tween_completed(object, key):
+    print (object, " ", key)
+    var parent = get_parent()
+    var player = parent.get_node ( parent.player_path )
+    if object == player:
+        print ( "is player" )
+        player.in_control = true
+#        player.set_exit_collision ( true )
