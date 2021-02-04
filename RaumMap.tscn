@@ -95,7 +95,7 @@ scale = Vector2( 1.96692, 1.01694 )
 position = Vector2( 0, -1112 )
 
 [node name="PlayerStart_North" type="Position2D" parent="."]
-position = Vector2( 928, 160 )
+position = Vector2( 928, 150 )
 
 [node name="Exit_East" parent="." instance=ExtResource( 3 )]
 position = Vector2( 1800.85, 581.266 )
@@ -118,7 +118,7 @@ direction = 2
 position = Vector2( 0, 1112 )
 
 [node name="PlayerStart_South" type="Position2D" parent="."]
-position = Vector2( 928, 1056 )
+position = Vector2( 928, 1018 )
 scale = Vector2( 1.96692, 1.01694 )
 
 [node name="CameraPoint" type="Position2D" parent="."]
