@@ -34,5 +34,6 @@ scale = Vector2( 0.344584, 0.323351 )
 player_path = NodePath("../Player")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+z_index = 10
 anchor_mode = 0
 current = true
