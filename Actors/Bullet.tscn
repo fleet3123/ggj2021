@@ -16,9 +16,6 @@
 [ext_resource path="res://BulletFrames/magic_shot0008.png" type="Texture" id=14]
 [ext_resource path="res://BulletFrames/magic_shot0009.png" type="Texture" id=15]
 
-[sub_resource type="CircleShape2D" id=1]
-radius = 7.52804
-
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
 "frames": [ ExtResource( 1 ), ExtResource( 13 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 3 ), ExtResource( 10 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 4 ), ExtResource( 9 ), ExtResource( 11 ), ExtResource( 12 ) ],
@@ -27,7 +24,12 @@ animations = [ {
 "speed": 15.0
 } ]
 
-[node name="Bullet" type="Area2D"]
+[sub_resource type="CircleShape2D" id=1]
+radius = 13.0823
+
+[node name="Bullet" type="Area2D" groups=[
+"bullet",
+]]
 collision_layer = 2
 collision_mask = 516
 script = ExtResource( 2 )
