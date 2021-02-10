@@ -24,6 +24,9 @@ onready var anim = $AnimatedSprite
 
 var in_control : bool = true
 
+func _ready ():
+    $AnimationPlayer.play ( "Idle" )
+
 func _process ( _delta ):
     if not in_control:
         pass    
@@ -112,8 +115,8 @@ func try_interacting ():
 
 func take_damage ( dmg_to_take ):
     curr_hp -= dmg_to_take
-    $AnimationPlayer.play ( "Attacked" )
-
+    $AnimationPlayer.play ( "Attacked" , 1 )
+    $AnimationPlayer.queue ( "Idle" )
     if curr_hp <= 0:
         die()
 

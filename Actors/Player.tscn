@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Actors/Bullet.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=2]
@@ -76,9 +76,28 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
+[sub_resource type="Animation" id=4]
+resource_name = "Idle"
+length = 1.95
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:offset")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 1.95, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 12 ), Vector2( 0, -12 ), Vector2( 0, 11.286 ), Vector2( 0, 12 ) ]
+}
+
 [node name="Player" type="KinematicBody2D" groups=[
 "player",
 ]]
+position = Vector2( 0, 2 )
 scale = Vector2( 0.3, 0.3 )
 z_index = 1
 collision_mask = 512
@@ -92,6 +111,7 @@ enabled = true
 position = Vector2( 16, -16 )
 frames = SubResource( 1 )
 animation = "IdleDown"
+offset = Vector2( 0, 11.286 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 2 )
@@ -101,3 +121,4 @@ position = Vector2( 0, 16 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Attacked = SubResource( 3 )
+anims/Idle = SubResource( 4 )
