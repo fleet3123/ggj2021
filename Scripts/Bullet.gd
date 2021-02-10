@@ -8,9 +8,8 @@ func _physics_process ( delta ):
     position += transform.x * speed * delta
 
 func _on_Bullet_body_entered ( body ):
-    if body.is_in_group("player"):
-        return
-    elif body.is_in_group("hitable"):
+
+    if body.is_in_group("hitable"):
         body.take_damage ( damage )
     die()
 
@@ -22,4 +21,4 @@ func die ():
     
 func _on_AnimationPlayer_animation_finished(anim_name):
     if anim_name == "Hit":
-    queue_free()
+        queue_free()
