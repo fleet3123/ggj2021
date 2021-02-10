@@ -30,6 +30,7 @@ radius = 15.0
 [node name="Enemy3Bullet" type="Area2D" groups=[
 "bullet",
 ]]
+input_pickable = false
 collision_layer = 2
 collision_mask = 513
 script = ExtResource( 1 )
