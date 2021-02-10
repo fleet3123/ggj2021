@@ -62,7 +62,7 @@ func chase_state():
         if animation.is_flipped_h():
             animation.set_flip_h(false)
             $AnimatedSprite/BulletSpawn.position.x *= -1
-            
+        
     if $too_close.overlaps_body(target):
         move_and_slide((direction*(-1)) * (speed/2))
         
@@ -71,8 +71,8 @@ func chase_state():
 
 func attack_state():
     if target != null:
-    shoot()
-    state = IDLE
+        shoot()
+        state = IDLE
     
 func shoot():
     var b = Bullet2.instance()
@@ -96,7 +96,8 @@ func _on_Attack_body_entered(body):
         state = ATTACK
 
 func _on_Detection_body_entered(body):
-    target = body
+    if body.is_in_group ( "player" ):
+        target = body
     
 func take_damage(dmg_to_take):
     curr_hp -= dmg_to_take
