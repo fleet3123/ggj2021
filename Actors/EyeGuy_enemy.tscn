@@ -27,11 +27,6 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 8 ), ExtResource( 1 ) ],
 "loop": true,
-"name": "IdleLeft",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 8 ), ExtResource( 1 ) ],
-"loop": true,
 "name": "IdleUp",
 "speed": 5.0
 }, {
@@ -39,6 +34,16 @@ animations = [ {
 "loop": true,
 "name": "IdleRight",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 1 ) ],
+"loop": true,
+"name": "IdleLeft",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "MoveDown",
+"speed": 10.0
 }, {
 "frames": [ ExtResource( 3 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 9 ) ],
 "loop": true,
@@ -53,11 +58,6 @@ animations = [ {
 "frames": [ ExtResource( 3 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 9 ) ],
 "loop": true,
 "name": "MoveUp",
-"speed": 10.0
-}, {
-"frames": [ ExtResource( 3 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 9 ) ],
-"loop": true,
-"name": "MoveDown",
 "speed": 10.0
 }, {
 "frames": [ ExtResource( 14 ), ExtResource( 10 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 11 ) ],
