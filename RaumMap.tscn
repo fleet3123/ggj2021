@@ -159,4 +159,3 @@ position = Vector2( 928, 1018 )
 scale = Vector2( 1.96692, 1.01694 )
 
 [node name="CameraPoint" type="Position2D" parent="."]
-[connection signal="tree_entered" from="." to="." method="_on_Room1_tree_entered"]
