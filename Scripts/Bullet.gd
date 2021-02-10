@@ -12,4 +12,14 @@ func _on_Bullet_body_entered ( body ):
         return
     elif body.is_in_group("hitable"):
         body.take_damage ( damage )
+    die()
+
+func die ():
+    speed = 0
+    $CollisionShape2D.disabled = true
+    $AnimationPlayer.play ( "Hit" )
+    
+    
+func _on_AnimationPlayer_animation_finished(anim_name):
+    if anim_name == "Hit":
     queue_free()
