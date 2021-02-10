@@ -81,7 +81,7 @@ tracks/0/keys = {
 ]]
 scale = Vector2( 0.3, 0.3 )
 z_index = 1
-collision_layer = 7
+collision_mask = 512
 script = ExtResource( 2 )
 Bullet = ExtResource( 1 )
 
