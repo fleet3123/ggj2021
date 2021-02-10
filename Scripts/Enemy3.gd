@@ -56,12 +56,13 @@ func chase_state():
     if direction.x > 0:
         if !animation.is_flipped_h():
             animation.set_flip_h(true)
+            $AnimatedSprite/BulletSpawn.position.x *= -1
             
     elif direction.x < 0:
         if animation.is_flipped_h():
             animation.set_flip_h(false)
+            $AnimatedSprite/BulletSpawn.position.x *= -1
             
-        
     if $too_close.overlaps_body(target):
         move_and_slide((direction*(-1)) * (speed/2))
         
@@ -69,34 +70,30 @@ func chase_state():
         move_and_slide(direction*speed)
 
 func attack_state():
+    if target != null:
     shoot()
     state = IDLE
     
 func shoot():
-    var curr_position = Vector2((global_position.x - 64), (global_position.y - 192))
     var b = Bullet2.instance()
-    b.set_direction((target.global_position - curr_position).normalized())
-    b.shoot()
-    if animation.is_flipped_h():
-        b.set_position(Vector2(curr_position.x+128, curr_position.y))
-    else:
-        b.set_position(curr_position)
+    
+    $AnimatedSprite/BulletSpawn.look_at ( target.global_position )
+    b.set_direction ( $AnimatedSprite/BulletSpawn.get_global_transform() )
+        
     b.set_target(target)
     owner.add_child(b)
+    b.shoot()
     
     cooldown = true
     cooldownTimer.start(2)
-
 
 func _on_cooldownTimer_timeout():
     cooldownTimer.stop()
     cooldown = false
 
-
 func _on_Attack_body_entered(body):
     if !cooldown:
         state = ATTACK
-
 
 func _on_Detection_body_entered(body):
     target = body
