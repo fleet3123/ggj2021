@@ -10,7 +10,8 @@ var damage = 1
 
 
 func set_direction(direction):
-    dir = direction
+#    dir = direction
+    transform = direction
     
 func set_position(pos):
     position = pos
@@ -24,7 +25,7 @@ func shoot():
 
 func _physics_process(delta):
     if shot:
-        position += (speed * dir * delta)
+        position += (speed * transform.x * delta)
 
 
 func _on_Enemy3Bullet_body_entered(body):
