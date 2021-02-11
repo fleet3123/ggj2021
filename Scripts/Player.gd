@@ -41,7 +41,6 @@ func _physics_process ( delta ):
     vel = Vector2()
 
     facing_dir = position.direction_to ( get_global_mouse_position() )
-    $BulletSpawn.look_at ( get_global_mouse_position() )
 #    facing_dir.normalized()
     var abs_x = abs ( facing_dir.x )
     var abs_y = abs ( facing_dir.y )
@@ -124,6 +123,7 @@ func die():
     get_tree().reload_current_scene()
 
 func shoot ():
+    $BulletSpawn.look_at ( get_global_mouse_position() )
     var b = Bullet.instance()
     owner.add_child(b)
     b.transform = $BulletSpawn.global_transform
