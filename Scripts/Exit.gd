@@ -44,10 +44,9 @@ func _ready ():
 func _on_Exit_body_entered ( body ):
 
     var parent = get_parent()
-    var player = parent.get_node ( parent.player_path )
-    if body == player and player.in_control == true:
+    if body.is_in_group ( "player" ) and body.in_control == true:
 #            get_tree().reload_current_scene()
-        player.in_control = false
+        body.in_control = false
         var room = null
         if next_room_path:
             room = parent.get_node ( next_room_path )
@@ -70,9 +69,9 @@ func _on_Exit_body_entered ( body ):
             , Tween.TRANS_QUAD , Tween.EASE_IN_OUT
             )
         tween.interpolate_property (
-            player
+            body
             , "position"
-            , player.position
+            , body.position
             , room.get_node ( PLAYERSTART + PLAYERDICT [ direction ] ).global_position
             , 1
             , Tween.TRANS_LINEAR, Tween.EASE_IN_OUT
@@ -84,9 +83,7 @@ func _on_Exit_body_entered ( body ):
 
 func _on_Tween_tween_completed(object, key):
     print (object, " ", key)
-    var parent = get_parent()
-    var player = parent.get_node ( parent.player_path )
-    if object == player:
+    if object.is_in_group("player"):
         print ( "is player" )
-        player.in_control = true
+        object.in_control = true
 #        player.set_exit_collision ( true )
