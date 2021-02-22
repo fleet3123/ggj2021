@@ -1,0 +1,17 @@
+[remap]
+
+importer="texture_atlas"
+type="Texture"
+path="res://.import/magic_shot0006.png-77fd538d5d727942fbc37838903379ac.res"
+group_file="res://Art_Assets/SpriteFrames/BulletFrames/magic_shot_sheet.png"
+valid=true
+[deps]
+
+
+source_file="res://Art_Assets/SpriteFrames/BulletFrames/magic_shot0006.png"
+dest_files=[ "res://.import/magic_shot0006.png-77fd538d5d727942fbc37838903379ac.res" ]
+
+[params]
+
+atlas_file="res://Art_Assets/SpriteFrames/BulletFrames/magic_shot_sheet.png"
+import_mode=0

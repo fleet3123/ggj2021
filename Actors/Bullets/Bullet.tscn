@@ -1,20 +1,20 @@
 [gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://audio/SFX/magic_shot4.wav" type="AudioStream" id=1]
-[ext_resource path="res://BulletFrames/magic_shot0013.png" type="Texture" id=2]
-[ext_resource path="res://BulletFrames/magic_shot0012.png" type="Texture" id=3]
-[ext_resource path="res://BulletFrames/magic_shot0015.png" type="Texture" id=4]
-[ext_resource path="res://BulletFrames/magic_shot0003.png" type="Texture" id=5]
-[ext_resource path="res://BulletFrames/magic_shot0008.png" type="Texture" id=6]
-[ext_resource path="res://BulletFrames/magic_shot0014.png" type="Texture" id=7]
-[ext_resource path="res://BulletFrames/magic_shot0001.png" type="Texture" id=8]
-[ext_resource path="res://BulletFrames/magic_shot0009.png" type="Texture" id=9]
-[ext_resource path="res://BulletFrames/magic_shot0006.png" type="Texture" id=10]
-[ext_resource path="res://BulletFrames/magic_shot0007.png" type="Texture" id=11]
-[ext_resource path="res://BulletFrames/magic_shot0004.png" type="Texture" id=12]
-[ext_resource path="res://BulletFrames/magic_shot0002.png" type="Texture" id=13]
-[ext_resource path="res://BulletFrames/magic_shot0000.png" type="Texture" id=14]
-[ext_resource path="res://BulletFrames/magic_shot0005.png" type="Texture" id=15]
+[ext_resource path="res://Art_Assets/SpriteFrames/BulletFrames/magic_shot0013.png" type="Texture" id=2]
+[ext_resource path="res://Art_Assets/SpriteFrames/BulletFrames/magic_shot0012.png" type="Texture" id=3]
+[ext_resource path="res://Art_Assets/SpriteFrames/BulletFrames/magic_shot0015.png" type="Texture" id=4]
+[ext_resource path="res://Art_Assets/SpriteFrames/BulletFrames/magic_shot0003.png" type="Texture" id=5]
+[ext_resource path="res://Art_Assets/SpriteFrames/BulletFrames/magic_shot0008.png" type="Texture" id=6]
+[ext_resource path="res://Art_Assets/SpriteFrames/BulletFrames/magic_shot0014.png" type="Texture" id=7]
+[ext_resource path="res://Art_Assets/SpriteFrames/BulletFrames/magic_shot0001.png" type="Texture" id=8]
+[ext_resource path="res://Art_Assets/SpriteFrames/BulletFrames/magic_shot0009.png" type="Texture" id=9]
+[ext_resource path="res://Art_Assets/SpriteFrames/BulletFrames/magic_shot0006.png" type="Texture" id=10]
+[ext_resource path="res://Art_Assets/SpriteFrames/BulletFrames/magic_shot0007.png" type="Texture" id=11]
+[ext_resource path="res://Art_Assets/SpriteFrames/BulletFrames/magic_shot0004.png" type="Texture" id=12]
+[ext_resource path="res://Art_Assets/SpriteFrames/BulletFrames/magic_shot0002.png" type="Texture" id=13]
+[ext_resource path="res://Art_Assets/SpriteFrames/BulletFrames/magic_shot0000.png" type="Texture" id=14]
+[ext_resource path="res://Art_Assets/SpriteFrames/BulletFrames/magic_shot0005.png" type="Texture" id=15]
 [ext_resource path="res://Scripts/Bullet.gd" type="Script" id=16]
 
 [sub_resource type="SpriteFrames" id=1]
@@ -79,7 +79,7 @@ script = ExtResource( 16 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
-frame = 12
+frame = 3
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
