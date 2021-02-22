@@ -1,0 +1,94 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://Templates/Enemy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/Enemies/CorpseFly.gd" type="Script" id=2]
+[ext_resource path="res://Actors/Enemy3Bullet.tscn" type="PackedScene" id=3]
+[ext_resource path="res://FlyFrames/Fliege_5.png" type="Texture" id=4]
+[ext_resource path="res://FlyFrames/Fliege_4.png" type="Texture" id=5]
+[ext_resource path="res://FlyFrames/Fliege_12.png" type="Texture" id=6]
+[ext_resource path="res://FlyFrames/Fliege_9.png" type="Texture" id=7]
+[ext_resource path="res://FlyFrames/Fliege_11.png" type="Texture" id=8]
+[ext_resource path="res://FlyFrames/Fliege_7.png" type="Texture" id=9]
+[ext_resource path="res://FlyFrames/Fliege_10.png" type="Texture" id=10]
+[ext_resource path="res://FlyFrames/Fliege_6.png" type="Texture" id=11]
+[ext_resource path="res://FlyFrames/Fliege_8.png" type="Texture" id=12]
+[ext_resource path="res://FlyFrames/Fliege_2.png" type="Texture" id=13]
+[ext_resource path="res://FlyFrames/Fliege_1.png" type="Texture" id=14]
+[ext_resource path="res://Scripts/utils/hitable.gd" type="Script" id=15]
+
+
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 96.0
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 584.0
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 456.5
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 344.0
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ ExtResource( 13 ), ExtResource( 14 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 11 ), ExtResource( 9 ), ExtResource( 12 ), ExtResource( 7 ), ExtResource( 10 ), ExtResource( 8 ), ExtResource( 6 ), ExtResource( 14 ) ],
+"loop": true,
+"name": "default1",
+"speed": 14.0
+} ]
+
+[node name="CorpseFly" groups=[
+"mob",
+] instance=ExtResource( 1 )]
+z_index = 1
+script = ExtResource( 2 )
+starting_hp = 3
+xp_to_give = 20
+Bullet = ExtResource( 3 )
+
+[node name="Body" type="KinematicBody2D" parent="." index="1" groups=[
+"hitable",
+]]
+collision_layer = 4
+collision_mask = 513
+script = ExtResource( 15 )
+
+[node name="HitBox" type="CollisionShape2D" parent="Body" index="0"]
+shape = SubResource( 1 )
+
+[node name="Detection" type="Area2D" parent="Body" index="1"]
+collision_layer = 0
+
+[node name="DetectionBox" type="CollisionShape2D" parent="Body/Detection" index="0"]
+modulate = Color( 0.458824, 0.764706, 0.0117647, 1 )
+shape = SubResource( 2 )
+
+[node name="Attack" type="Area2D" parent="Body" index="2"]
+
+[node name="AttackRange" type="CollisionShape2D" parent="Body/Attack" index="0"]
+modulate = Color( 0.658824, 0.0588235, 0.901961, 1 )
+shape = SubResource( 3 )
+
+[node name="TooClose" type="Area2D" parent="Body" index="3"]
+collision_layer = 0
+
+[node name="Distance" type="CollisionShape2D" parent="Body/TooClose" index="0"]
+shape = SubResource( 4 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Body" index="4"]
+position = Vector2( 0, -168 )
+frames = SubResource( 5 )
+animation = "default1"
+frame = 4
+playing = true
+
+[node name="BulletSpawn" type="Position2D" parent="Body/AnimatedSprite" index="0"]
+position = Vector2( -90.0312, -15.2096 )
+
+[node name="AttackCooldown" type="Timer" parent="." index="2"]
+wait_time = 2.0
+[connection signal="took_hit" from="Body" to="." method="_on_Body_took_hit"]
+[connection signal="body_entered" from="Body/Detection" to="." method="_on_Detection_body_entered"]
+[connection signal="body_entered" from="Body/Attack" to="." method="_on_Attack_body_entered"]
+[connection signal="timeout" from="AttackCooldown" to="." method="_on_AttackCooldown_timeout"]

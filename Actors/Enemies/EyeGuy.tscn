@@ -1,0 +1,164 @@
+[gd_scene load_steps=24 format=2]
+
+[ext_resource path="res://Templates/Enemy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/utils/hitable.gd" type="Script" id=2]
+[ext_resource path="res://EnemyFrames/EyeGuy/w1_.png" type="Texture" id=3]
+[ext_resource path="res://EnemyFrames/EyeGuy/w3.png" type="Texture" id=4]
+[ext_resource path="res://EnemyFrames/EyeGuy/w2.png" type="Texture" id=5]
+[ext_resource path="res://EnemyFrames/EyeGuy/w4.png" type="Texture" id=6]
+[ext_resource path="res://EnemyFrames/EyeGuy/w5.png" type="Texture" id=7]
+[ext_resource path="res://EnemyFrames/EyeGuy/eyeguy_idle1.png" type="Texture" id=8]
+[ext_resource path="res://EnemyFrames/EyeGuy/w6.png" type="Texture" id=9]
+[ext_resource path="res://EnemyFrames/EyeGuy/a2.png" type="Texture" id=10]
+[ext_resource path="res://EnemyFrames/EyeGuy/a8.png" type="Texture" id=11]
+[ext_resource path="res://EnemyFrames/EyeGuy/a6.png" type="Texture" id=12]
+[ext_resource path="res://EnemyFrames/EyeGuy/a7.png" type="Texture" id=13]
+[ext_resource path="res://EnemyFrames/EyeGuy/a1.png" type="Texture" id=14]
+[ext_resource path="res://EnemyFrames/EyeGuy/a3.png" type="Texture" id=15]
+[ext_resource path="res://EnemyFrames/EyeGuy/a4.png" type="Texture" id=16]
+[ext_resource path="res://audio/SFX/roar_massive2.wav" type="AudioStream" id=17]
+[ext_resource path="res://Scripts/Enemies/EyeGuy.gd" type="Script" id=18]
+[ext_resource path="res://EnemyFrames/EyeGuy/eyeguy_idle2.png" type="Texture" id=19]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Attack"
+length = 2.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body/Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "Attack" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Body/Sprite:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Body/Roar:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 2.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Body/Sprite:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=2]
+length = 6.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body/Sight/CollisionPolygon2D:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 359.0 ]
+}
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ ExtResource( 8 ), ExtResource( 19 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "Chase",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 11 ), ExtResource( 14 ), ExtResource( 10 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 10 ) ],
+"loop": false,
+"name": "Attack",
+"speed": 15.0
+} ]
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 77.3135
+
+[node name="EyeGuy" groups=[
+"mob",
+] instance=ExtResource( 1 )]
+scale = Vector2( 0.5, 0.5 )
+z_index = 1
+script = ExtResource( 18 )
+starting_hp = 2
+xp_to_give = 10
+
+[node name="AnimationPlayer" parent="." index="0"]
+playback_process_mode = 0
+anims/Attack = SubResource( 1 )
+anims/IdleSight = SubResource( 2 )
+
+[node name="Body" type="KinematicBody2D" parent="." index="1" groups=[
+"hitable",
+]]
+collision_layer = 4
+collision_mask = 513
+script = ExtResource( 2 )
+
+[node name="Sprite" type="AnimatedSprite" parent="Body" index="0"]
+frames = SubResource( 3 )
+animation = "Attack"
+frame = 8
+playing = true
+offset = Vector2( 0, -10 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" index="1"]
+position = Vector2( -0.445465, -21.827 )
+scale = Vector2( 0.54923, 0.640001 )
+shape = SubResource( 4 )
+
+[node name="Roar" type="AudioStreamPlayer2D" parent="Body" index="2"]
+stream = ExtResource( 17 )
+volume_db = -6.55
+pitch_scale = 1.5
+
+[node name="Sight" type="Area2D" parent="Body" index="3"]
+scale = Vector2( 0.5, 0.5 )
+monitorable = false
+collision_layer = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Body/Sight" index="0"]
+polygon = PoolVector2Array( 64, -80, 768, 992, 0, 1152, -768, 992, -64, -80 )
+
+[node name="AttackCooldown" type="Timer" parent="." index="2"]
+wait_time = 0.5
+one_shot = true
+[connection signal="took_hit" from="Body" to="." method="_on_Body_took_hit"]
+[connection signal="animation_finished" from="Body/Sprite" to="." method="_on_Sprite_animation_finished"]
+[connection signal="body_entered" from="Body/Sight" to="." method="_on_Sight_body_entered"]
+[connection signal="timeout" from="AttackCooldown" to="." method="_on_AttackCooldown_timeout"]
