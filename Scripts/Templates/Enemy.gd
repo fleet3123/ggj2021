@@ -2,7 +2,7 @@ class_name Enemy
 extends Node2D
 
 
-# signal spawned
+signal spawned
 signal hit
 signal died
 
@@ -21,6 +21,8 @@ func _init():
 func _ready ():
     curr_hp = starting_hp
     print ( "Enemy ready", self, anim)
+    if anim.has_animation ( "Spawn" ):
+        anim.play ( "Spawn" )
     # emit_signal ( "spawned" )
 
 func take_damage ( dmg : int ):
@@ -41,7 +43,9 @@ func die ():
         queue_free();
 
 func _on_AnimationPlayer_animation_finished ( anim_name : String ):
-    if anim_name == "Die":
+    if anim_name == "Spawn":
+        emit_signal ( "spawned" )
+    elif anim_name == "Die":
         queue_free()
     
     
