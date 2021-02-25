@@ -56,7 +56,8 @@ func _on_Exit_body_entered ( body ):
             room.player_path = parent.player_path
             room.camera_path = parent.camera_path
             
-            parent.get_parent().add_child ( room )
+            var parent_of_parent = parent.get_parent()
+            parent_of_parent.add_child ( room )
             parent.set_exit_room_path ( direction, room.get_path() )
             room.set_exit_room_path ( OPPOSITE[direction], parent.get_path() )
 
@@ -80,6 +81,7 @@ func _on_Exit_body_entered ( body ):
 #        player.position = room.get_node ( PLAYERSTART + PLAYERDICT [ direction ] ).global_position
 #        player.set_exit_collision ( false )
         tween.start()
+        room.emit_signal ( "room_entered" )
 
 func _on_Tween_tween_completed(object, key):
     print (object, " ", key)

@@ -24,6 +24,13 @@ onready var anim = $AnimatedSprite
 
 var in_control : bool = true
 
+enum {
+    NORMAL,
+    ATTACK
+   }
+
+signal state_changed ( new_state )
+
 func _ready ():
     $AnimationPlayer.play ( "Idle" )
 
@@ -125,7 +132,9 @@ func die():
 func shoot ():
     $BulletSpawn.look_at ( get_global_mouse_position() )
     var b = Bullet.instance()
+    var s = Vector2.ONE / scale
     owner.add_child(b)
+    b.scale *= s * 3
     b.transform = $BulletSpawn.global_transform
 
 func set_exit_collision ( var enable : bool ) :

@@ -1,5 +1,7 @@
-extends StaticBody2D
+extends Node2D
 
+signal room_entered()
+signal room_exited()
 
 enum Direction{
     NORTH,
@@ -8,29 +10,36 @@ enum Direction{
     WEST,
 }
 
-const PLAYERSTART = "PlayerStart_"
-const ROOMSPAWN = "RoomSpawn_"
-const CAMERAPOINT = "CameraPoint"
 const ENUMTOSTRING = {
     Direction.NORTH: "North",
     Direction.EAST: "East",
     Direction.SOUTH: "South",
     Direction.WEST: "West"
     }
+    
 const PLAYERDICT = {
     Direction.NORTH: "South",
     Direction.EAST: "West",
     Direction.SOUTH: "North",
     Direction.WEST: "East"
     }
+    
+const OPPOSITE = {
+    Direction.NORTH: Direction.SOUTH,
+    Direction.EAST: Direction.WEST,
+    Direction.SOUTH: Direction.NORTH,
+    Direction.WEST: Direction.EAST
+}
+    
+#const Direction = preload("res://Scripts/utils/direction.gd")
+const PLAYERSTART = "PlayerStart_"
+const ROOMSPAWN = "RoomSpawn_"
+const CAMERAPOINT = "CameraPoint"
 
-onready var exit_north = $Exit_North
-onready var exit_east = $Exit_East
-onready var exit_south = $Exit_South
-onready var exit_west = $Exit_West
 
 export (NodePath) var camera_path
 export (NodePath) var player_path
+export (NodePath) var encounter setget set_encounter
 
 export (PackedScene) var room_north
 export (PackedScene) var room_east
@@ -41,6 +50,12 @@ export (NodePath) var room_path_north
 export (NodePath) var room_path_east
 export (NodePath) var room_path_south
 export (NodePath) var room_path_west
+
+
+onready var exit_north = $Exit_North
+onready var exit_east = $Exit_East
+onready var exit_south = $Exit_South
+onready var exit_west = $Exit_West
 
 func _ready():
     exit_north.next_room = room_north
@@ -54,7 +69,8 @@ func _ready():
     
     exit_west.next_room = room_west
     exit_west.next_room_path = room_path_west
-    
+
+
 func set_exit_room_path ( var direction, var path : NodePath ):
     match direction:
         Direction.NORTH:
@@ -69,3 +85,17 @@ func set_exit_room_path ( var direction, var path : NodePath ):
         Direction.WEST:
             room_path_west = path
             exit_west.next_room_path = room_path_west
+
+
+func set_encounter ( new_encounter ):
+    encounter = new_encounter
+
+
+func _on_room_entered():
+    if encounter:
+        var e = get_node ( encounter )
+        e.startEncounter()
+
+
+func _on_Room_tree_entered():
+    pass # Replace with function body.
