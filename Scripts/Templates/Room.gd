@@ -56,10 +56,6 @@ var _exits : Dictionary = {}
 
 onready var tween = $Tween
 
-onready var exit_north = $Exit_North
-onready var exit_east = $Exit_East
-onready var exit_south = $Exit_South
-onready var exit_west = $Exit_West
 
 func _ready():
     _camera = get_node ( camera_path )
@@ -68,36 +64,20 @@ func _ready():
     _exits [ Direction.SOUTH ] = [ room_path_south, room_south ]
     _exits [ Direction.WEST ] = [ room_path_west, room_west ]
 
-    exit_north.next_room = room_north
-    exit_north.next_room_path = room_path_north
-    
-    exit_east.next_room = room_east
-    exit_east.next_room_path = room_path_east
-    
-    exit_south.next_room = room_south
-    exit_south.next_room_path = room_path_south
-    
-    exit_west.next_room = room_west
-    exit_west.next_room_path = room_path_west
-
 
 func set_exit_room_path ( var direction, var path : NodePath ):
     _exits [ direction ] [0] = path
     match direction:
         Direction.NORTH:
             room_path_north = path
-            exit_north.next_room_path = room_path_north
         Direction.EAST:
             room_path_east = path
-            exit_east.next_room_path = room_path_east
         Direction.SOUTH:
             room_path_south = path
-            exit_south.next_room_path = room_path_south
         Direction.WEST:
             room_path_west = path
-            exit_south.next_room_path = room_path_west
+ 
             
-
 func spawn_room ( direction ) -> Node2D :
     var next_room = _exits [ direction ][ 1 ]
     var room = next_room.instance()
