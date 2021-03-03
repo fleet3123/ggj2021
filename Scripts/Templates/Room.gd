@@ -3,35 +3,7 @@ extends Node2D
 signal room_entered()
 signal room_exited()
 
-enum Direction{
-    NORTH,
-    EAST,
-    SOUTH,
-    WEST,
-}
-
-const ENUMTOSTRING = {
-    Direction.NORTH: "North",
-    Direction.EAST: "East",
-    Direction.SOUTH: "South",
-    Direction.WEST: "West"
-    }
-    
-const PLAYERDICT = {
-    Direction.NORTH: "South",
-    Direction.EAST: "West",
-    Direction.SOUTH: "North",
-    Direction.WEST: "East"
-    }
-    
-const OPPOSITE = {
-    Direction.NORTH: Direction.SOUTH,
-    Direction.EAST: Direction.WEST,
-    Direction.SOUTH: Direction.NORTH,
-    Direction.WEST: Direction.EAST
-}
-    
-#const Direction = preload("res://Scripts/utils/direction.gd")
+const Direction = preload("res://Scripts/utils/direction.gd")
 const PLAYERSTART = "PlayerStart_"
 const ROOMSPAWN = "RoomSpawn_"
 const CAMERAPOINT = "CameraPoint"
@@ -81,14 +53,14 @@ func set_exit_room_path ( var direction, var path : NodePath ):
 func spawn_room ( direction ) -> Node2D :
     var next_room = _exits [ direction ][ 1 ]
     var room = next_room.instance()
-    room.position = get_node ( ROOMSPAWN + ENUMTOSTRING [ direction ] ).global_position
-    room.player_path = player_path
+    var room_path = ROOMSPAWN + Direction.ENUMTOSTRING [ direction ]
+    room.position = get_node ( room_path ).global_position
     room.camera_path = camera_path
         
     var parent = get_parent()
     parent.add_child ( room )
     set_exit_room_path ( direction, room.get_path() )
-    room.set_exit_room_path ( OPPOSITE [ direction ], get_path() )
+    room.set_exit_room_path ( Direction.OPPOSITE [ direction ], get_path() )
     
     return room
 
@@ -105,7 +77,7 @@ func enter_room ( player, direction ):
         _camera
         , "position"
         , _camera.position
-        , room.get_node ( CAMERAPOINT ).global_position
+        , _room.get_node ( CAMERAPOINT ).global_position
         , 1
         , Tween.TRANS_QUAD , Tween.EASE_IN_OUT
         )
@@ -113,7 +85,7 @@ func enter_room ( player, direction ):
         player
         , "position"
         , player.position
-        , room.get_node ( PLAYERSTART + PLAYERDICT [ direction ] ).global_position
+        , _room.get_node ( PLAYERSTART + Direction.PLAYERDICT [ direction ] ).global_position
         , 1
         , Tween.TRANS_LINEAR, Tween.EASE_IN_OUT
         )
