@@ -1,3 +1,4 @@
+class_name Room    
 extends Node2D
 
 signal room_entered()
