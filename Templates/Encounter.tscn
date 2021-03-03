@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/utils/spawning.gd" type="Script" id=1]
+
+[node name="Encounter" type="Node"]
+script = ExtResource( 1 )
+
+[node name="NextEncounterCoolDown" type="Timer" parent="."]
+one_shot = true
+[connection signal="timeout" from="NextEncounterCoolDown" to="." method="_on_NextEncounterCoolDown_timeout"]
