@@ -25,7 +25,7 @@ onready var attack_cooldown = $AttackCooldown
 
 func _ready():
     attack_cooldown.wait_time = attack_rate
-    anim.play("IdleSight")
+    anim.queue("IdleSight")
 
 func _physics_process ( delta ):
         

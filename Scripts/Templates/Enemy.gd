@@ -22,8 +22,10 @@ func _ready ():
     curr_hp = starting_hp
     print ( "Enemy ready", self, anim)
     if anim.has_animation ( "Spawn" ):
+        anim.stop ( true )
         anim.play ( "Spawn" )
-    # emit_signal ( "spawned" )
+    else:
+        emit_signal ( "spawned" )
 
 func take_damage ( dmg : int ):
     emit_signal ( "hit" )
