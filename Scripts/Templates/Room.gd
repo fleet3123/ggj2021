@@ -2,16 +2,12 @@ class_name Room
 extends Node2D
 
 signal room_entered()
-signal room_exited()
+signal room_exited ( player, room, direction )
+
 
 const Direction = preload("res://Scripts/utils/direction.gd")
-const PLAYERSTART = "PlayerStart_"
-const ROOMSPAWN = "RoomSpawn_"
-const CAMERAPOINT = "CameraPoint"
 
 
-export (NodePath) var camera_path
-export (NodePath) var player_path
 export (NodePath) var encounter setget set_encounter
 
 export (PackedScene) var room_north
@@ -24,22 +20,19 @@ export (NodePath) var room_path_east
 export (NodePath) var room_path_south
 export (NodePath) var room_path_west
 
-var _camera : Camera2D = null
-var _exits : Dictionary = {}
-
-onready var tween = $Tween
+var exits : Dictionary = {}
+var spawn_points : Array = []
 
 
 func _ready():
-    _camera = get_node ( camera_path )
-    _exits [ Direction.NORTH ] = [ room_path_north, room_north ]
-    _exits [ Direction.EAST ] = [ room_path_east, room_east ]
-    _exits [ Direction.SOUTH ] = [ room_path_south, room_south ]
-    _exits [ Direction.WEST ] = [ room_path_west, room_west ]
 
+    exits [ Direction.NORTH ] = [ room_path_north, room_north, $RoomSpawn_North ]
+    exits [ Direction.EAST ] = [ room_path_east, room_east, $RoomSpawn_East ]
+    exits [ Direction.SOUTH ] = [ room_path_south, room_south, $RoomSpawn_South ]
+    exits [ Direction.WEST ] = [ room_path_west, room_west, $RoomSpawn_West ]
 
 func set_exit_room_path ( var direction, var path : NodePath ):
-    _exits [ direction ] [0] = path
+    exits [ direction ] [0] = path
     match direction:
         Direction.NORTH:
             room_path_north = path
@@ -51,47 +44,17 @@ func set_exit_room_path ( var direction, var path : NodePath ):
             room_path_west = path
  
             
-func spawn_room ( direction ) -> Node2D :
-    var next_room = _exits [ direction ][ 1 ]
-    var room = next_room.instance()
-    var room_path = ROOMSPAWN + Direction.ENUMTOSTRING [ direction ]
-    room.position = get_node ( room_path ).global_position
-    room.camera_path = camera_path
+func get_exit_path ( var in_dir ) -> NodePath:
+    return exits [ in_dir ][ 0 ]
         
-    var parent = get_parent()
-    parent.add_child ( room )
-    set_exit_room_path ( direction, room.get_path() )
-    room.set_exit_room_path ( Direction.OPPOSITE [ direction ], get_path() )
     
-    return room
+func get_exit_scene ( var in_dir ) -> PackedScene:
+    return exits [ in_dir ][ 1 ]
 
-func enter_room ( player, direction ):
-    var room = null
-    var next_room_path = _exits [ direction ][ 0 ]
     
-    if next_room_path:
-        room = get_node ( next_room_path )
-    else:
-        room = spawn_room ( direction )
+func get_exit_room_spawn ( var in_dir ) -> Position2D:
+    return exits [ in_dir ][ 2 ]
 
-    tween.interpolate_property (
-        _camera
-        , "position"
-        , _camera.position
-        , _room.get_node ( CAMERAPOINT ).global_position
-        , 1
-        , Tween.TRANS_QUAD , Tween.EASE_IN_OUT
-        )
-    tween.interpolate_property (
-        player
-        , "position"
-        , player.position
-        , _room.get_node ( PLAYERSTART + Direction.PLAYERDICT [ direction ] ).global_position
-        , 1
-        , Tween.TRANS_LINEAR, Tween.EASE_IN_OUT
-        )
-    tween.start()
-    room.emit_signal ( "room_entered" )
 
 func set_encounter ( new_encounter ):
     encounter = new_encounter
@@ -103,17 +66,7 @@ func _on_room_entered():
         e.startEncounter()
 
 
-func _on_Room_tree_entered():
-    print ( self, " entered tree.")
-
-
 func _on_exit_entered ( body, direction ):
-    if body.is_in_group ( "player" ) and body.in_control == true:
-        body.in_control = false
-        call_deferred ( "enter_room", body, direction )
+    if body.is_in_group ( "player" ):
+        emit_signal ( "room_exited", body, self, direction )
 
-
-func _on_Tween_tween_completed ( object, key ):
-    print (object, " ", key)
-    if object.is_in_group("player"):
-        object.in_control = true

@@ -164,15 +164,12 @@ scale = Vector2( 1.96692, 1.01694 )
 
 [node name="CameraPoint" type="Position2D" parent="."]
 
-[node name="SpawnPoints" type="Node" parent="."]
+[node name="SpawnPoints" type="Node2D" parent="."]
 
 [node name="SpawnPoint" type="Position2D" parent="SpawnPoints"]
 position = Vector2( 640, 360 )
-
-[node name="Tween" type="Tween" parent="."]
 [connection signal="tree_entered" from="." to="." method="_on_Room_tree_entered"]
 [connection signal="exit_entered" from="Exit_West" to="." method="_on_exit_entered"]
 [connection signal="exit_entered" from="Exit_North" to="." method="_on_exit_entered"]
 [connection signal="exit_entered" from="Exit_East" to="." method="_on_exit_entered"]
 [connection signal="exit_entered" from="Exit_South" to="." method="_on_exit_entered"]
-[connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]
