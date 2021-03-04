@@ -15,6 +15,7 @@ export ( Array, Array ) var encounters
 var active_spawns : Array = []
 var spawn_count : int = 0
 var active_encounter_idx : int = 0
+var encounter_running : bool = false
 
 var spawn_parent : Node2D = null setget set_spawn_parent, get_spawn_parent
 
@@ -29,6 +30,11 @@ onready var next_encounter = $NextEncounterCoolDown
 # Number of spawn positions
 # possible overlaps?
 func startEncounter ():
+    
+    if encounter_running:
+        return
+    else:
+        encounter_running = true
     
     var active_encounter = encounters [ active_encounter_idx ]
     
@@ -64,6 +70,7 @@ func _on_Enemy_died ():
         
     elif active_encounter_idx < ( encounters.size() - 1 ) :
         emit_signal ("encounter_ended", active_encounter_idx )
+        encounter_running = false
         next_encounter.start ( 1 )
         
     else:
