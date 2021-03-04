@@ -126,14 +126,21 @@ tracks/2/keys = {
 "update": 0,
 "values": [ 0.0, 360.0, 0.0, 0.0 ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath("Body/Sight:monitoring")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
 
 [sub_resource type="SpriteFrames" id=4]
 animations = [ {
-"frames": [ ExtResource( 11 ), ExtResource( 14 ), ExtResource( 10 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 10 ) ],
-"loop": false,
-"name": "Attack",
-"speed": 15.0
-}, {
 "frames": [ ExtResource( 8 ), ExtResource( 19 ) ],
 "loop": true,
 "name": "Idle",
@@ -143,6 +150,11 @@ animations = [ {
 "loop": true,
 "name": "Chase",
 "speed": 10.0
+}, {
+"frames": [ ExtResource( 11 ), ExtResource( 14 ), ExtResource( 10 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 10 ) ],
+"loop": false,
+"name": "Attack",
+"speed": 15.0
 } ]
 
 [sub_resource type="CircleShape2D" id=5]
@@ -190,6 +202,8 @@ pitch_scale = 1.5
 
 [node name="Sight" type="Area2D" parent="Body" index="3"]
 scale = Vector2( 0.5, 0.5 )
+input_pickable = false
+monitoring = false
 monitorable = false
 collision_layer = 0
 
