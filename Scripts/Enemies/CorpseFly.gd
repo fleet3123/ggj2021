@@ -76,6 +76,8 @@ func shoot():
     b.set_direction ( bullet_spawn.get_global_transform() )
         
     b.set_target ( target )
+    if owner == null:
+        owner = get_parent().owner
     owner.add_child ( b )
     b.shoot()
     
