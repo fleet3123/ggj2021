@@ -3,6 +3,7 @@ extends Node2D
 
 
 signal spawned
+signal first_hit
 signal hit
 signal died
 
@@ -28,6 +29,9 @@ func _ready ():
         emit_signal ( "spawned" )
 
 func take_damage ( dmg : int ):
+
+    if curr_hp == starting_hp:
+        emit_signal ( "first_hit" )
     emit_signal ( "hit" )
     
     curr_hp -= dmg
