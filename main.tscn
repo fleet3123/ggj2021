@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Actors/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Environments/Rooms/Room1.tscn" type="PackedScene" id=2]
@@ -10,8 +10,10 @@
 [ext_resource path="res://audio/Music/ambient_dungeon.ogg" type="AudioStream" id=8]
 [ext_resource path="res://audio/Music/ggj_battletheme.ogg" type="AudioStream" id=9]
 [ext_resource path="res://Scripts/Managers/EncounterList.gd" type="Script" id=10]
+[ext_resource path="res://Scripts/Game.gd" type="Script" id=11]
 
 [node name="Game" type="Node"]
+script = ExtResource( 11 )
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
@@ -57,6 +59,7 @@ margin_right = 160.0
 margin_bottom = 64.0
 rect_min_size = Vector2( 128, 72 )
 rect_scale = Vector2( 0.75, 0.75 )
+[connection signal="finished" from="BackgroundMusic" to="BackgroundMusic" method="_on_finished"]
 [connection signal="room_spawned" from="Rooms" to="EncounterList" method="_on_room_spawned"]
 [connection signal="room_exited" from="Rooms/Room1" to="Rooms" method="_on_room_exited"]
 [connection signal="tween_completed" from="Rooms/Tween" to="Rooms" method="_on_Tween_tween_completed"]
