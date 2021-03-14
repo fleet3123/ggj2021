@@ -7,7 +7,8 @@ extends Node
 
 signal encounter_started ( index )
 signal encounter_ended ( index )
-signal encounters_ended ()
+signal encounters_started()
+signal encounters_ended()
 
 export ( Array, NodePath ) var spawn_positions
 
@@ -29,13 +30,20 @@ onready var next_encounter = $NextEncounterCoolDown
 # Number of Enemies in Encounter
 # Number of spawn positions
 # possible overlaps?
-func startEncounter ():
+func startEncounters():
+    
+    if active_encounter_idx < encounters.size():
+        emit_signal ( "encounters_started" )
+        _startEncounter()  
+
+
+func _startEncounter ():
     
     if encounter_running:
         return
     else:
         encounter_running = true
-    
+
     var active_encounter = encounters [ active_encounter_idx ]
     
     if active_encounter.size() > spawn_positions.size() :
@@ -48,12 +56,13 @@ func startEncounter ():
         var spawn_at = spawn_positions [ idx ]
         var enemy = active_encounter [ idx ]
         var e = enemy.instance()
+        e.connect ( "died", self, "_on_Enemy_died" )
         if spawn_parent:
             spawn_parent.add_child ( e )
         else:
             owner.add_child ( e )
         e.global_position = spawn_at.global_position
-        e.connect ( "died", self, "_on_Enemy_died")
+    
 
     emit_signal("encounter_started", active_encounter_idx )
 
@@ -69,8 +78,9 @@ func _on_Enemy_died ():
         spawn_count -= 1
         
     elif active_encounter_idx < ( encounters.size() - 1 ) :
-        emit_signal ("encounter_ended", active_encounter_idx )
+        emit_signal ( "encounter_ended", active_encounter_idx )
         encounter_running = false
+        active_encounter_idx += 1
         next_encounter.start ( 1 )
         
     else:
@@ -78,6 +88,4 @@ func _on_Enemy_died ():
 
 
 func _on_NextEncounterCoolDown_timeout():
-    
-    active_encounter_idx += 1
-    startEncounter ()
+    _startEncounter ()

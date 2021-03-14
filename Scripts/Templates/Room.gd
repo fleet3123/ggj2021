@@ -65,7 +65,7 @@ func get_exit_room_spawn ( var in_dir ) -> Position2D:
 
 
 func set_encounter ( new_encounter ):
-    encounter = new_encounter.duplicate()
+    encounter = new_encounter.duplicate(7)
     self.add_child ( encounter )
     encounter.spawn_positions = spawn_points
     encounter.spawn_parent = new_encounter.spawn_parent
@@ -76,7 +76,7 @@ func get_encounter ():
 
 func _on_room_entered():
     if encounter:
-        encounter.startEncounter()
+        encounter.startEncounters()
 
 
 func _on_exit_entered ( body, direction ):
