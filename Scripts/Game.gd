@@ -1,8 +1,6 @@
 extends Node
 
-
-onready var bg_music = $BackgroundMusic
-onready var sfx = $SFX
+# onready var bg_music = $BackgroundMusic
 
 # Wann startet ein Kampf?
 # Monster beginnt Angriff -> Monster findet Spieler
@@ -13,7 +11,7 @@ onready var sfx = $SFX
 # Called when the node enters the scene tree for the first time.
 
 func _ready():
-    pass # Replace with function body.
+    Music.play_song ( "NormalTheme", 1.0 )
     
 func _on_encounter_started ( _idx ):
     var enemies = get_tree().get_nodes_in_group ( "mob" )
@@ -21,10 +19,12 @@ func _on_encounter_started ( _idx ):
         enemy.connect ( "first_hit", self, "_on_fight_started" )
 
 func _on_fight_started():
-    bg_music.audio_state = bg_music.BATTLE
+    if ( Music.is_song_playing ( "NormalTheme" ) ):
+        Music.stop_song ( 5.5 )
+    Music.play_song ( "BattleTheme", 5.5 )
     
     
 func _on_fight_ended():
-    bg_music.audio_state = bg_music.NORMAL
+    Music.play_song ( "NormalTheme", 1.0 )
     
     

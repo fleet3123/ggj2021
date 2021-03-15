@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://addons/audio_booth/source/music/MusicBooth.gd" type="Script" id=1]
+[ext_resource path="res://addons/audio_booth/source/music/containers/TrackContainer.gd" type="Script" id=2]
+[ext_resource path="res://addons/audio_booth/source/music/Song.gd" type="Script" id=3]
+[ext_resource path="res://audio/Music/ambient_dungeon.ogg" type="AudioStream" id=4]
+[ext_resource path="res://audio/Music/map_of_the_unknown.ogg" type="AudioStream" id=5]
+[ext_resource path="res://audio/Music/ggj_battletheme.ogg" type="AudioStream" id=6]
+
+[node name="MusicBooth" type="Node"]
+script = ExtResource( 1 )
+
+[node name="NormalTheme" type="Node" parent="."]
+script = ExtResource( 3 )
+tempo = 100.0
+beats = 4
+
+[node name="TrackContainer" type="Node" parent="NormalTheme"]
+script = ExtResource( 2 )
+
+[node name="Track" type="AudioStreamPlayer" parent="NormalTheme/TrackContainer"]
+stream = ExtResource( 5 )
+
+[node name="BattleTheme" type="Node" parent="."]
+script = ExtResource( 3 )
+tempo = 100.0
+beats = 4
+
+[node name="TrackContainer" type="Node" parent="BattleTheme"]
+script = ExtResource( 2 )
+
+[node name="Track" type="AudioStreamPlayer" parent="BattleTheme/TrackContainer"]
+stream = ExtResource( 6 )
+
+[node name="Ambient" type="Node" parent="."]
+script = ExtResource( 3 )
+tempo = 100.0
+beats = 4
+
+[node name="TrackContainer" type="Node" parent="Ambient"]
+script = ExtResource( 2 )
+
+[node name="Track" type="AudioStreamPlayer" parent="Ambient/TrackContainer"]
+stream = ExtResource( 4 )

@@ -77,6 +77,10 @@ _global_script_class_icons={
 config/name="Maps In A Hole"
 run/main_scene="res://main.tscn"
 
+[autoload]
+
+Music="*res://MusicBooth.tscn"
+
 [display]
 
 window/size/width=1280
