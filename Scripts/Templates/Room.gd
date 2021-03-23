@@ -8,6 +8,7 @@ signal room_exited ( player, room, direction )
 const Direction = preload("res://Scripts/utils/direction.gd")
 
 var encounter : Encounter = null setget set_encounter, get_encounter
+export (PackedScene) var map_drop
 
 export (PackedScene) var room_north
 export (PackedScene) var room_east
@@ -37,6 +38,7 @@ func _ready():
     
     if encounter:
         encounter.spawn_positions = spawn_points
+        encounter.connect ( "encounters_ended", self, "_on_fight_ended" )
 
 
 func set_exit_room_path ( var direction, var path : NodePath ):
@@ -69,6 +71,7 @@ func set_encounter ( new_encounter ):
     self.add_child ( encounter )
     encounter.spawn_positions = spawn_points
     encounter.spawn_parent = new_encounter.spawn_parent
+    encounter.connect ( "encounters_ended", self, "_on_fight_ended" )
 
 func get_encounter ():
     return encounter
@@ -82,4 +85,12 @@ func _on_room_entered():
 func _on_exit_entered ( body, direction ):
     if body.is_in_group ( "player" ):
         emit_signal ( "room_exited", body, self, direction )
+
+
+func _on_fight_ended ():
+    if map_drop :
+        var m = map_drop.instance()
+        self.add_child ( m )
+        m.position = $MapDropPoint.position
+
 
